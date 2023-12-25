@@ -106,11 +106,6 @@ class _TestPageState extends State<TestPage> {
     });
 
     searchResults.forEach((result) async {
-      // double distance = await calculateRoadDistance(
-      //     result['Co-ordinates'].latitude,
-      //     result['Co-ordinates'].longitude,
-      //     13.16756790891849,
-      //     77.5331164318344);
       setState(() {
         result['Distance'] = 100;
         searchResults.sort((a, b) => a['Distance'].compareTo(b['Distance']));
