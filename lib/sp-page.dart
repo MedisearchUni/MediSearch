@@ -10,7 +10,7 @@ import 'dart:convert' as convert;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart'; // Import the url_launcher package
 
-const apiKey = 'AIzaSyAyWpjQ_9muTPZzR1vAhdwUjLyEmzFcDp0';
+const apiKey = '#';
 
 Future<double> calculateRoadDistance(
     double lat1, double lon1, double lat2, double lon2) async {

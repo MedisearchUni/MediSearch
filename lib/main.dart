@@ -16,7 +16,7 @@ import 'dart:convert' as convert;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart'; // Import the url_launcher package
 
-const apiKey = 'AIzaSyAyWpjQ_9muTPZzR1vAhdwUjLyEmzFcDp0';
+const apiKey = '#';
 
 Future<double> calculateRoadDistance(
     double lat1, double lon1, double lat2, double lon2) async {
@@ -143,11 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
       this.searchResults = searchResults;
     });
     searchResults.forEach((result) async {
-      // double distance = await calculateRoadDistance(
-      //     result['Co-ordinates'].latitude,
-      //     result['Co-ordinates'].longitude,
-      //     13.16756790891849,
-      //     77.5331164318344);
       setState(() {
         result['Distance'] = 100;
         searchResults.sort((a, b) => a['Distance'].compareTo(b['Distance']));
@@ -300,22 +295,9 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(child: searchContainer),
-          // SizedBox(
-          //   height: 300,
-          //   width: 700,
-          //   child: Center(
-          //       child: GridView.extent(
-          //     padding: const EdgeInsets.all(16),
-          //     crossAxisSpacing: 10,
-          //     mainAxisSpacing: 10,
-          //     maxCrossAxisExtent: 200.0,
-          //     children: <Widget>[],
-          //   )),
-          // ),
           SizedBox(
             height: 50,
           ),
-
           SizedBox(
               child: searchResults.length > 0
                   ? SizedBox(
@@ -373,19 +355,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   depth: 20,
                                   color: Colors.white,
                                 ),
-                                // decoration: BoxDecoration(
-                                //   boxShadow: [
-                                //     BoxShadow(
-                                //       color: Colors.grey,
-                                //       blurRadius: 5.0,
-                                //     ),
-                                //   ],
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(12)),
-                                //   color: Colors.white,
-                                // ),
-                                // width: 650,
-                                // height: 300,
                                 padding: const EdgeInsets.all(8),
                                 child: SizedBox(
                                   width: 650,
@@ -430,18 +399,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   depth: 20,
                                   color: Colors.white,
                                 ),
-                                // decoration: BoxDecoration(
-                                //   boxShadow: [
-                                //     BoxShadow(
-                                //       color: Colors.grey,
-                                //       blurRadius: 5.0,
-                                //     ),
-                                //   ],
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(12)),
-                                //   color: Colors.white,
-                                // ),
-
                                 padding: const EdgeInsets.all(8),
                                 child: SizedBox(
                                   width: 650,
@@ -486,17 +443,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Neumorphic(
-                                // decoration: BoxDecoration(
-                                //   boxShadow: [
-                                //     BoxShadow(
-                                //       color: Colors.grey,
-                                //       blurRadius: 5.0,
-                                //     ),
-                                //   ],
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(12)),
-                                //   color: Colors.white,
-                                // ),
                                 style: NeumorphicStyle(
                                   shape: NeumorphicShape.convex,
                                   boxShape: NeumorphicBoxShape.roundRect(
@@ -504,7 +450,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   depth: 20,
                                   color: Colors.white,
                                 ),
-
                                 padding: const EdgeInsets.all(8),
                                 child: SizedBox(
                                   width: 650,
@@ -542,17 +487,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Neumorphic(
-                                // decoration: BoxDecoration(
-                                //   boxShadow: [
-                                //     BoxShadow(
-                                //       color: Colors.grey,
-                                //       blurRadius: 5.0,
-                                //     ),
-                                //   ],
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(12)),
-                                //   color: Colors.white,
-                                // ),
                                 style: NeumorphicStyle(
                                   shape: NeumorphicShape.convex,
                                   boxShape: NeumorphicBoxShape.roundRect(
