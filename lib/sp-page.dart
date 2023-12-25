@@ -149,13 +149,20 @@ class _SpecialistPageState extends State<SpecialistPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Logo image
-          Image.asset(
-            'assets/images/logo.png',
-            height: 100,
-            width: 200,
+          InkWell(
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 100,
+              width: 200,
+            ),
           ),
-          const SizedBox(width: 16),
           // Search field
           SizedBox(
               width: 400,
@@ -200,7 +207,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                 ),
               )),
           SizedBox(width: 16),
-          GestureDetector(
+          InkWell(
             onTap: () {
               getAllData().then((allData) {
                 searchLocalData(allData, searchValue.toLowerCase());
@@ -286,12 +293,6 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                       searchResults[index]['Co-ordinates'];
                                   String url =
                                       'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
-
-                                  // ...
-
-                                  // launchUrl(Uri.parse(
-                                  //     url));
-
                                   launchInBrowser(
                                       url); // Use the launch function from the url_launcher package to open the URL
                                 },

@@ -233,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )),
           SizedBox(width: 16),
-          GestureDetector(
+          InkWell(
             onTap: () {
               getAllData().then((allData) {
                 searchLocalData(allData, searchValue.toLowerCase());
@@ -323,12 +323,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     ['Co-ordinates'];
                                             String url =
                                                 'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
-
-                                            // ...
-
-                                            // launchUrl(Uri.parse(
-                                            //     url));
-
                                             launchInBrowser(
                                                 url); // Use the launch function from the url_launcher package to open the URL
                                           },

@@ -150,10 +150,19 @@ class _TestPageState extends State<TestPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Logo image
-          Image.asset(
-            'assets/images/logo.png',
-            height: 100,
-            width: 200,
+          InkWell(
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 100,
+              width: 200,
+            ),
           ),
           const SizedBox(width: 16),
           // Search field
@@ -200,7 +209,7 @@ class _TestPageState extends State<TestPage> {
                 ),
               )),
           SizedBox(width: 16),
-          GestureDetector(
+          InkWell(
             onTap: () {
               getAllData().then((allData) {
                 searchLocalData(allData, searchValue.toLowerCase());
@@ -283,12 +292,6 @@ class _TestPageState extends State<TestPage> {
                                       searchResults[index]['Co-ordinates'];
                                   String url =
                                       'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
-
-                                  // ...
-
-                                  // launchUrl(Uri.parse(
-                                  //     url));
-
                                   launchInBrowser(
                                       url); // Use the launch function from the url_launcher package to open the URL
                                 },
@@ -325,7 +328,7 @@ class _TestPageState extends State<TestPage> {
                                               DataCell(Text(entry.key)),
                                               DataCell(
                                                 Container(
-                                                  height: 120,
+                                                  height: 150,
                                                   child: Text(
                                                     entry.key ==
                                                                 'Specialists' ||
@@ -453,7 +456,7 @@ class InfoCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: 180,
+            height: 210,
             width: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
