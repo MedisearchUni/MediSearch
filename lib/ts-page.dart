@@ -365,7 +365,8 @@ class _TestPageState extends State<TestPage> {
                     child: InfoCard(
                       title: searchResults[index]['Name'].toString(),
                       body: searchResults[index]['Test-Map'].keys.toString(),
-                      subInfoText: searchResults[index]['Distance'].toString(),
+                      subInfoText:
+                          searchResults[index]['Distance'].toString() + " Km",
                       subInfoText2: searchResults[index]['Avg-Cost'].toString(),
                     ),
                   ),

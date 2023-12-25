@@ -401,8 +401,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 title: searchResults[index]['Name'].toString(),
                                 body:
                                     searchResults[index]['Address'].toString(),
-                                subInfoText:
-                                    searchResults[index]['Distance'].toString(),
+                                subInfoText: searchResults[index]['Distance']
+                                        .toString() +
+                                    " Km",
                                 subInfoText2:
                                     searchResults[index]['Avg-Cost'].toString(),
                               ),

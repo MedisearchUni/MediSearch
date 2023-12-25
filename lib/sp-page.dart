@@ -366,7 +366,8 @@ class _SpecialistPageState extends State<SpecialistPage> {
                     child: InfoCard(
                       title: searchResults[index]['Name'].toString(),
                       body: searchResults[index]['Specialists'].keys.toString(),
-                      subInfoText: searchResults[index]['Distance'].toString(),
+                      subInfoText:
+                          searchResults[index]['Distance'].toString() + " Km",
                       subInfoText2: searchResults[index]['Avg-Cost'].toString(),
                     ),
                   ),

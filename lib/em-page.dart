@@ -366,7 +366,8 @@ class _EMPageState extends State<EMPage> {
                       title: searchResults[index]['Name'].toString(),
                       body: searchResults[index]['Emergency-Medication']
                           .toString(),
-                      subInfoText: searchResults[index]['Distance'].toString(),
+                      subInfoText:
+                          searchResults[index]['Distance'].toString() + " Km",
                       subInfoText2: searchResults[index]['Avg-Cost'].toString(),
                     ),
                   ),
