@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_utils/google_maps_utils.dart';
 import 'package:hospital_finder/bg-page.dart';
 import 'package:hospital_finder/em-page.dart';
@@ -14,7 +16,7 @@ import 'dart:convert' as convert;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart'; // Import the url_launcher package
 
-const apiKey = '#';
+const apiKey = 'AIzaSyAyWpjQ_9muTPZzR1vAhdwUjLyEmzFcDp0';
 
 Future<double> calculateRoadDistance(
     double lat1, double lon1, double lat2, double lon2) async {
@@ -126,13 +128,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     searchResults.forEach((result) async {
-      // double distance = await calculateRoadDistance(
-      //     result['Co-ordinates'].latitude,
-      //     result['Co-ordinates'].longitude,
-      //     13.16756790891849,
-      //     77.5331164318344);
+      double distance = await calculateRoadDistance(
+          result['Co-ordinates'].latitude,
+          result['Co-ordinates'].longitude,
+          13.16756790891849,
+          77.5331164318344);
       setState(() {
-        result['Distance'] = 100;
+        result['Distance'] = distance;
         searchResults.sort((a, b) => a['Distance'].compareTo(b['Distance']));
       });
     });
@@ -175,10 +177,21 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Logo image
-          Image.asset(
-            'assets/images/logo.png',
-            height: 100,
-            width: 200,
+          InkWell(
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onTap: () {
+              setState(() {
+                searchResults = [];
+              });
+            },
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 100,
+              width: 200,
+            ),
           ),
           const SizedBox(width: 16),
           // Search field
@@ -282,111 +295,299 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(child: searchContainer),
+          // SizedBox(
+          //   height: 300,
+          //   width: 700,
+          //   child: Center(
+          //       child: GridView.extent(
+          //     padding: const EdgeInsets.all(16),
+          //     crossAxisSpacing: 10,
+          //     mainAxisSpacing: 10,
+          //     maxCrossAxisExtent: 200.0,
+          //     children: <Widget>[],
+          //   )),
+          // ),
           SizedBox(
-            height: 300,
-            width: 700,
-            child: Center(
-                child: GridView.extent(
-              padding: const EdgeInsets.all(16),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              maxCrossAxisExtent: 200.0,
-              children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              SpecialistPage()), // Navigate to the specialist page
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: const Text('First', style: TextStyle(fontSize: 20)),
-                    color: Colors.yellow,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              TestPage()), // Navigate to the specialist page
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: const Text('Second', style: TextStyle(fontSize: 20)),
-                    color: Colors.blue,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              BGPage()), // Navigate to the specialist page
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: const Text('Third', style: TextStyle(fontSize: 20)),
-                    color: Colors.blue,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              EMPage()), // Navigate to the specialist page
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: const Text('Four', style: TextStyle(fontSize: 20)),
-                    color: Colors.yellow,
-                  ),
-                ),
-              ],
-            )),
+            height: 50,
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.9,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: ListView.builder(
-              itemCount: searchResults.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    void showDetailsPopup(Map<String, dynamic> data) {
-                      // ... existing code for showing details popup
-                    }
 
-                    showDetailsPopup(searchResults[index]);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(28.0),
-                    child: InfoCard(
-                      title: searchResults[index]['Name'].toString(),
-                      body: searchResults[index]['Address'].toString(),
-                      subInfoText: searchResults[index]['Distance'].toString(),
-                      subInfoText2: searchResults[index]['Avg-Cost'].toString(),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          SizedBox(
+              child: searchResults.length > 0
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: ListView.builder(
+                        itemCount: searchResults.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              void showDetailsPopup(Map<String, dynamic> data) {
+                                // ... existing code for showing details popup
+                              }
+
+                              showDetailsPopup(searchResults[index]);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(28.0),
+                              child: InfoCard(
+                                title: searchResults[index]['Name'].toString(),
+                                body:
+                                    searchResults[index]['Address'].toString(),
+                                subInfoText:
+                                    searchResults[index]['Distance'].toString(),
+                                subInfoText2:
+                                    searchResults[index]['Avg-Cost'].toString(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        SizedBox(
+                            child: Center(
+                                child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SpecialistPage()), // Navigate to the specialist page
+                                );
+                              },
+                              child: Neumorphic(
+                                style: NeumorphicStyle(
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(12)),
+                                  depth: 20,
+                                  color: Colors.white,
+                                ),
+                                // decoration: BoxDecoration(
+                                //   boxShadow: [
+                                //     BoxShadow(
+                                //       color: Colors.grey,
+                                //       blurRadius: 5.0,
+                                //     ),
+                                //   ],
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(12)),
+                                //   color: Colors.white,
+                                // ),
+                                // width: 650,
+                                // height: 300,
+                                padding: const EdgeInsets.all(8),
+                                child: SizedBox(
+                                  width: 650,
+                                  height: 300,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/dc.png',
+                                        height: 150,
+                                        width: 150,
+                                      ),
+                                      Text(
+                                        'Specialists',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TestPage()), // Navigate to the specialist page
+                                );
+                              },
+                              child: Neumorphic(
+                                style: NeumorphicStyle(
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(12)),
+                                  depth: 20,
+                                  color: Colors.white,
+                                ),
+                                // decoration: BoxDecoration(
+                                //   boxShadow: [
+                                //     BoxShadow(
+                                //       color: Colors.grey,
+                                //       blurRadius: 5.0,
+                                //     ),
+                                //   ],
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(12)),
+                                //   color: Colors.white,
+                                // ),
+
+                                padding: const EdgeInsets.all(8),
+                                child: SizedBox(
+                                  width: 650,
+                                  height: 300,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/tt.png',
+                                        height: 150,
+                                        width: 150,
+                                      ),
+                                      Text(
+                                        'Tests',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ))),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        SizedBox(
+                            child: Center(
+                                child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BGPage()), // Navigate to the specialist page
+                                );
+                              },
+                              child: Neumorphic(
+                                // decoration: BoxDecoration(
+                                //   boxShadow: [
+                                //     BoxShadow(
+                                //       color: Colors.grey,
+                                //       blurRadius: 5.0,
+                                //     ),
+                                //   ],
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(12)),
+                                //   color: Colors.white,
+                                // ),
+                                style: NeumorphicStyle(
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(12)),
+                                  depth: 20,
+                                  color: Colors.white,
+                                ),
+
+                                padding: const EdgeInsets.all(8),
+                                child: SizedBox(
+                                  width: 650,
+                                  height: 300,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/bp.png',
+                                        height: 150,
+                                        width: 150,
+                                      ),
+                                      Text(
+                                        'Blood Availability',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EMPage()), // Navigate to the specialist page
+                                );
+                              },
+                              child: Neumorphic(
+                                // decoration: BoxDecoration(
+                                //   boxShadow: [
+                                //     BoxShadow(
+                                //       color: Colors.grey,
+                                //       blurRadius: 5.0,
+                                //     ),
+                                //   ],
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(12)),
+                                //   color: Colors.white,
+                                // ),
+                                style: NeumorphicStyle(
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(12)),
+                                  depth: 20,
+                                  color: Colors.white,
+                                ),
+                                padding: const EdgeInsets.all(8),
+                                child: SizedBox(
+                                  width: 650,
+                                  height: 300,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/md.png',
+                                        height: 150,
+                                        width: 150,
+                                      ),
+                                      Text(
+                                        'Emergency Medication',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ))),
+                      ],
+                    )),
         ],
       ),
     ));

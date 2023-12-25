@@ -1,4 +1,16 @@
-# MediSearch
+# hospital_finder
 
-MediSearch is a groundbreaking web app poised to redefine the way individuals access medical care in emergencies. Leveraging the capabilities of Machine Learning, our innovative solution addresses the often overwhelming challenge of locating nearby hospitals tailored to specific medical needs. Whether it's a particular treatment, the expertise of specialist doctors, availability of crucial medicines, or blood supplies, Hospital Finder empowers users with the ability to make informed decisions during critical moments. By placing the power of choice and essential information directly into the hands of individuals, our app ensures that accessing the right care is not only simplified but also expedited when it matters most. Hospital Finder is not just a tool; it's a transformative approach to healthcare accessibility, ushering in a new era of responsiveness and efficiency in emergency medical situations.
+A new Flutter project.
 
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

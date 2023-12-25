@@ -10,7 +10,7 @@ import 'dart:convert' as convert;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart'; // Import the url_launcher package
 
-const apiKey = '#';
+const apiKey = 'AIzaSyAyWpjQ_9muTPZzR1vAhdwUjLyEmzFcDp0';
 
 Future<double> calculateRoadDistance(
     double lat1, double lon1, double lat2, double lon2) async {
@@ -121,13 +121,13 @@ class _EMPageState extends State<EMPage> {
       this.searchResults = searchResults;
     });
     searchResults.forEach((result) async {
-      // double distance = await calculateRoadDistance(
-      //     result['Co-ordinates'].latitude,
-      //     result['Co-ordinates'].longitude,
-      //     13.16756790891849,
-      //     77.5331164318344);
+      double distance = await calculateRoadDistance(
+          result['Co-ordinates'].latitude,
+          result['Co-ordinates'].longitude,
+          13.16756790891849,
+          77.5331164318344);
       setState(() {
-        result['Distance'] = 100;
+        result['Distance'] = distance;
         searchResults.sort((a, b) => a['Distance'].compareTo(b['Distance']));
       });
     });
@@ -276,7 +276,88 @@ class _EMPageState extends State<EMPage> {
                 return InkWell(
                   onTap: () {
                     void showDetailsPopup(Map<String, dynamic> data) {
-                      // ... existing code for showing details popup
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Open Google Maps with the coordinates
+                                  GeoPoint coordinates =
+                                      searchResults[index]['Co-ordinates'];
+                                  String url =
+                                      'https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}';
+
+                                  // ...
+
+                                  // launchUrl(Uri.parse(
+                                  //     url));
+
+                                  launchInBrowser(
+                                      url); // Use the launch function from the url_launcher package to open the URL
+                                },
+                                child: Text('Directions'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Close'),
+                              ),
+                            ],
+                            content: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(16),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.black,
+                                            width:
+                                                2), // Set border color and width here
+                                      ),
+                                      child: DataTable(
+                                        columns: [
+                                          DataColumn(label: Text('')),
+                                          DataColumn(label: Text('')),
+                                        ],
+                                        rows: data.entries.map((entry) {
+                                          return DataRow(
+                                            cells: [
+                                              DataCell(Text(entry.key)),
+                                              DataCell(
+                                                Container(
+                                                  height: 120,
+                                                  child: Text(
+                                                    entry.key ==
+                                                                'Specialists' ||
+                                                            entry.key ==
+                                                                "Test-Map"
+                                                        ? entry.value.keys
+                                                            .map<String>(
+                                                                (value) =>
+                                                                    '• $value')
+                                                            .join('\n')
+                                                        : entry.value
+                                                            .toString(),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     }
 
                     showDetailsPopup(searchResults[index]);
@@ -378,12 +459,30 @@ class InfoCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: 120,
+            height: 140,
             width: 300,
-            child: Text(
-              body,
-              style:
-                  TextStyle(color: Colors.white.withOpacity(.9), fontSize: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: body.split(',').map((item) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('•',
+                        style: TextStyle(
+                            fontSize: 16, color: Colors.white.withOpacity(.9))),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        item.trim().replaceAll('[', '').replaceAll(']', ''),
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(.9),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }).toList(),
             ),
           ),
           const SizedBox(height: 15),
