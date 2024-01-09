@@ -10,7 +10,7 @@ import 'dart:convert' as convert;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart'; // Import the url_launcher package
 
-const apiKey = '#';
+const apiKey = 'Google_API_Key';
 
 Future<double> calculateRoadDistance(
     double lat1, double lon1, double lat2, double lon2) async {
@@ -337,7 +337,7 @@ class _TestPageState extends State<TestPage> {
                                                         ? entry.value.keys
                                                             .map<String>(
                                                                 (value) =>
-                                                                    '• $value')
+                                                                    '• $value:${entry.value[value]}')
                                                             .join('\n')
                                                         : entry.value
                                                             .toString(),

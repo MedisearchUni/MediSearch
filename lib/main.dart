@@ -15,8 +15,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart'; // Import the url_launcher package
+import 'package:geolocator/geolocator.dart';
 
-const apiKey = '#';
+const apiKey = 'Google_API_Key';
 
 Future<double> calculateRoadDistance(
     double lat1, double lon1, double lat2, double lon2) async {
@@ -84,6 +85,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     return allData;
+  }
+
+  //GETTING CURRENT LOCATION
+
+  Future<Position> getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print('Latitude: ${position.latitude}, Longitude: ${position.longitude}');
+    return position;
   }
 
   void searchLocalData(List<Map<String, dynamic>> allData, String searchValue) {
@@ -371,7 +381,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                       .keys
                                                                       .map<String>(
                                                                           (value) =>
-                                                                              '• $value')
+                                                                              '• $value:${entry.value[value]}') 
                                                                       .join(
                                                                           '\n')
                                                                   : entry.value
